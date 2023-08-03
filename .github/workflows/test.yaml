@@ -1,0 +1,22 @@
+name: Python application test
+
+on:
+  push:
+    branches: [ experiments ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build the Docker image
+      run: docker build --build-arg PYTHON_VERSION=3.11.4 -t detection_model .
+
+    - name: Run commands inside the Docker container
+      run: |
+        docker run -v ${{ github.workspace }}:/app -w /app detection_model /bin/bash -c "pip install -r requirements.txt && python test/test.py"
