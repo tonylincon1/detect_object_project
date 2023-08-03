@@ -3,8 +3,6 @@ name: Python application test
 on:
   push:
     branches: [ experiments ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build:
@@ -19,4 +17,4 @@ jobs:
 
     - name: Run commands inside the Docker container
       run: |
-        docker run -v ${{ github.workspace }}:/app -w /app detection_model /bin/bash -c "pip install -r requirements.txt && python test/test.py"
+        docker run -v ${{ github.workspace }}:/app -w /app detection_model /bin/bash -c "pip install -r requirements.txt && pytest"
