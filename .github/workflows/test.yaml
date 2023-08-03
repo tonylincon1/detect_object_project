@@ -6,6 +6,10 @@ jobs:
     container: docker://dvcorg/cml-py3:latest
     steps:
       - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11.4'
       - name: sanity-check
         run: |
           pip install -r requirements.txt
