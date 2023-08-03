@@ -1,16 +1,22 @@
-name: auto-testing
-on: [push]
+name: Python application test
+
+on:
+  push:
+    branches: [ experiments ]
+  pull_request:
+    branches: [ main ]
+
 jobs:
-  run:
-    runs-on: [ubuntu-latest]
-    container: docker://dvcorg/cml-py3:latest
+  build:
+
+    runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.11.4'
-      - name: sanity-check
-        run: |
-          pip install -r requirements.txt
-          python test/test.py
+    - uses: actions/checkout@v2
+
+    - name: Build the Docker image
+      run: docker build --build-arg PYTHON_VERSION=3.11.4 -t detection_model .
+
+    - name: Run commands inside the Docker container
+      run: |
+        docker run -v ${{ github.workspace }}:/app -w /app detection_model /bin/bash -c "pip install -r requirements.txt && python test/test.py"
