@@ -1,3 +1,4 @@
 env/
 runs/
 src/data/
+__pycache__/
