@@ -1,11 +1,11 @@
 from ultralytics import YOLO
 
-config = '../../config/config.yaml'
+class Validacao:
+    def __init__(self,config,model) -> None:
+        self.config = config
+        self.model = model
 
-model_link = '../train/runs/detect/train2/weights/best.pt'
-
-model = YOLO(model_link)
-
-metrics = model.val(data=config)
-
-print(metrics)
+    def validate(self):
+        modelo = YOLO(self.model)
+        metrics = modelo.val(data=self.config)
+        return metrics
