@@ -1,7 +1,7 @@
 import pytest
 
 import sys
-sys.path.insert(0, "C:/Users/anton/Desktop/detect_object_project")
+sys.path.insert(0, "/app") #C:/Users/anton/Desktop/detect_object_project
 
 from src.val.val import Validacao
 
